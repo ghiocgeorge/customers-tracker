@@ -40,7 +40,7 @@ There is **1 screenshot** attached that shows the page in the platform where the
 
 ### Steps
 
-1. Re-assemble the `Manage Contacts` View as shown in the screenshot (only the right side).
+1. Re-assemble the `Manage Contacts` View as shown in the screenshot.
 2. Implement the segments creation page where the brokers can add different conditions based on the contact's details. The rules will be explained below.
 3. Implement the `+` sign next to the `All Contacts` tab, where the user can add more segments to the list and navigate between tabs. This button will create a brand new segment with only one empty condition.
 
@@ -72,6 +72,9 @@ There is **1 screenshot** attached that shows the page in the platform where the
 
 1.  After the segment has been successfully created, it should show **only** the contacts that meet the segment's conditions.
 2.  The `all contacts` tab should show them all without any segmentation.
+
+
+## Screenshots
 
 ### Manage Contacts
 ![Manage Contacts](https://user-images.githubusercontent.com/36055258/109206924-2ba3bd80-77b1-11eb-81dd-ec3e1297b588.png)
