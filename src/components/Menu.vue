@@ -2,12 +2,12 @@
   <v-container fluid>
     <v-row id="menu">
       <button @click="action">
-        <dropBTN class="mb-3">Manage contacts</dropBTN>
+        <a id="dropBTN" class="mb-3">Manage contacts</a>
         <v-icon left medium id="dropIcon"> mdi-menu-down </v-icon>
       </button>
 
       <button @click="action">
-        <dropBTN class="mb-3"> Add contacts </dropBTN>
+        <a id="dropBTN" class="mb-3"> Add contacts </a>
         <v-icon left medium id="dropIcon"> mdi-menu-down </v-icon>
       </button>
     </v-row>
@@ -31,7 +31,7 @@
     border-bottom: 3px solid #cccccc;
   }
 
-  dropBTN {
+  #dropBTN {
     padding-left: 20px;
     padding-top: 50px;
     font-size: 16px;
