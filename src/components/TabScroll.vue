@@ -1,29 +1,29 @@
 <template>
-      <v-row>
+  <v-row>
     <v-tabs color="black">
       <v-tabs-slider color="black"></v-tabs-slider>
+
       <v-tab :class="`rounded-tr-xl`" class="py-3" id="textTab" active to="/">
         All Contacts
       </v-tab>
+
       <v-tab v-for="tab in tabs" :key="tab.id" @click.stop.prevent="setActive(tab)"
-      :class="'rounded-t-xl'" class="py-3" id="newTab" active>
+        :class="'rounded-t-xl'" class="py-3" id="newTab" active>
         Segment {{ tab.id + 1 }}
       </v-tab>
-      <v-tab role="presentation" @click.prevent="newTab" :class="`rounded-t-xl`" class="py-3" id="addTab">
+
+      <v-tab role="presentation" @click.prevent="newTab" :class="`rounded-t-xl`" class="py-3" id="newTab">
         <v-icon medium> mdi-plus-thick </v-icon>
       </v-tab>
     </v-tabs>
-        <!-- <pre>
-          {{ $data | json }}
-        </pre> -->
-      </v-row>
+  </v-row>
 </template>
 
 <script>
   export default {
     data() {
       return {
-          tabs: [],
+        tabs: [],
         activeTab: {}
       } 
     },
@@ -33,16 +33,18 @@
         tab.isActive = true;
         this.activeTab = tab;
         this.tabs.forEach(function (tab) {
-            if (tab.id !== self.activeTab.id) { tab.isActive = false;}
+          if (tab.id !== self.activeTab.id) { 
+            tab.isActive = false;
+          }
         });
         const tid = tab.id + 1;
         this.$router.push({ path: `/filterContacts/${tid}` });
       },
       newTab() {        
         var addTab = {
-            id: this.tabs.length,
-            query: "Segment " + (this.tabs.length + 1),
-            isActive: true
+          id: this.tabs.length,
+          query: "Segment " + (this.tabs.length + 1),
+          isActive: true
         };
         this.tabs.push(addTab);
         this.setActive(addTab);

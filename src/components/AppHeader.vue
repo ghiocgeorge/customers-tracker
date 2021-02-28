@@ -32,7 +32,7 @@
 
   #backIcon{
     padding-bottom:12px; 
-    color:#21ce99; 
+    color:#21cc99; 
     padding-right: 5px
   }
 

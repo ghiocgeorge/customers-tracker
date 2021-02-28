@@ -17,11 +17,9 @@ import RouterTab from './components/RouterTab';
 
 export default {
   name: 'App',
-
   components: {
     AppHeader, Menu, RouterTab,  
   },
-
   methods: {
     action () {
       alert('You clicked a button without action!')
@@ -31,22 +29,21 @@ export default {
 </script>
 
 <style>
-#app {
-  background: #f6f6f6;
-}
+  #app {
+    background: #f6f6f6;
+  }
 
-#card {
-  margin-top: 5px;
-}
+  #card {
+    margin-top: 5px;
+  }
 
-#container {
-  max-width: auto;
-  padding-block: 50px;
-  padding-inline: 50px;
-}
+  #container {
+    max-width: auto;
+    padding-block: 50px;
+    padding-inline: 50px;
+  }
 
-
-  .container {
+  /* .container {
     border: 1px solid green;
   }
   .card {
@@ -57,6 +54,11 @@ export default {
   }
   .col {
     border: 1px solid blue;
-  } 
-
+  }  
+  #section {
+    border: 1px solid green;
+  }  
+  #containerAll{
+    border: 1px solid red;
+  } */
 </style>
