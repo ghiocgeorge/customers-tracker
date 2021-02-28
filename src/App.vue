@@ -40,6 +40,7 @@ export default {
   #container {
     max-width: auto;
     padding-block: 50px;
+    padding-top: 20px;
     padding-inline: 50px;
   }
 

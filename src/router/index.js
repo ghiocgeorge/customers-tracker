@@ -11,13 +11,22 @@ const routes = [
     component: AllContacts
   },
   {
-    path: '/filterContacts/:id',
-    name: 'FilterContacts',
+    path: '/segment/:id',
+    name: 'Segment',
     props: true,
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "FilterContacts" */ '../views/FilterContacts.vue')
+    component: () => import(/* webpackChunkName: "Segment" */ '../views/Segment.vue')
+  },
+  {
+    path: '/addsegment',
+    name: 'AddSegment',
+    props: true,
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "AddSegment" */ '../views/AddSegment.vue')
   }
 ]
 

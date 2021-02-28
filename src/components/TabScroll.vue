@@ -12,7 +12,7 @@
         Segment {{ tab.id + 1 }}
       </v-tab>
 
-      <v-tab role="presentation" @click.prevent="newTab" :class="`rounded-t-xl`" class="py-3" id="newTab">
+      <v-tab role="presentation" to="/addsegment" :class="`rounded-t-xl`" class="py-3" id="newTab">
         <v-icon medium> mdi-plus-thick </v-icon>
       </v-tab>
     </v-tabs>
@@ -20,10 +20,12 @@
 </template>
 
 <script>
+import tabsData from '../store/tabsData.js'
+
   export default {
     data() {
       return {
-        tabs: [],
+        tabs: tabsData,
         activeTab: {}
       } 
     },
@@ -38,7 +40,7 @@
           }
         });
         const tid = tab.id + 1;
-        this.$router.push({ path: `/filterContacts/${tid}` });
+        this.$router.push({ path: `/segment/${tid}` });
       },
       newTab() {        
         var addTab = {
