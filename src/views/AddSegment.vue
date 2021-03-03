@@ -19,16 +19,11 @@
             ></v-select>
           <span id="firstRow">of the following: </span>
         </v-row>
+        <v-row>
+          <span v-if="error.length > 0" id="errorText">Errors: {{ error }}</span>
+        </v-row>
       </v-col>
     </v-row>
-
-    <!-- <component
-    v-for="(component, index) in components"
-    :key="index"
-    :is="component"
-    :index="index"
-    v-on:delete-me="delCondition()">
-    </component> -->
 
     <TheCondition 
       v-for="(condition, index) in conditions" 
@@ -68,10 +63,6 @@
         </button>
       </v-col>
     </v-row>
-    
-    <!-- <v-row> 
-      <span>Logical Operation: {{ logicalOp }}</span>
-    </v-row> -->
   </v-container>
 </template>
 
@@ -87,6 +78,7 @@ import TheCondition from '../components/TheCondition.vue'
     data() {
       return {
         id: 1,
+        error: [],
         copyIndex: undefined,
         conditions: [
           {
@@ -116,16 +108,49 @@ import TheCondition from '../components/TheCondition.vue'
         const tid = tab.id + 1;
         this.$router.push({ path: `/segment/${tid}` });
       },
-      newTab() {        
-        var addTab = {
-          id: this.tabs.length,
-          query: "Segment " + (this.tabs.length + 1),
-          isActive: true
-        };
+      newTab() {  
         // Before I make a new tab, here we filter the mockData
         // Then we send this filter to display in the new tab
-        this.tabs.push(addTab);
-        this.setActive(addTab);
+        // But if we have an empty field, we only give an error message
+
+        // Legend for conditions array 
+        // position 0: id
+        // position 1:  
+            // 0 - Mortgage Renewal Date [mortgageRenewalDate]
+            // 1 - Client Created Date [clientCreatedDate]
+            // 2 - Closing Date [closingDate]
+            // 3 - First Payment Date [firstPaymentDate]
+            // 4 - Client Value [value]
+            // 5 - Application Status [applicationStatus]
+            // 6 - Referrer [referrer]
+        // position 2:
+            // 0 - Is 
+            // 1 - Is larger than
+            // 2 - Is less than
+            // 3 - Is between
+        // position 3: first value
+        // position 4: 
+            // second value (this will exist only if is selected "Is between")
+
+        this.error = [];
+        if(this.logicalOp == null || this.logicalOp == "") {
+          this.error.push("You have empty inputs!");
+        } else {
+          for(var condition in this.conditions)
+            console.log("conditions de: (" + condition + ") " + 
+            this.conditions[condition].id + " -> " + 
+            this.conditions[condition].value)
+        }
+        
+        if (this.error.length == 0) {
+          var addTab = {
+            id: this.tabs.length,
+            query: "Segment " + (this.tabs.length + 1),
+            isActive: true
+          };
+          this.tabs.push(addTab);
+          this.setActive(addTab);
+        }  
       },
       newCondition() {  
         this.conditions.push({
@@ -134,24 +159,13 @@ import TheCondition from '../components/TheCondition.vue'
           });
       },
       delCondition(index) {  
-        // alert("You want to delete the condition with id: " + index);
         this.conditions.splice(index,1);
-        // console.log("s-a sters: " + index)
-        // for(var condition in this.conditions)
-        //   console.log("conditions de: (" + condition + ") " + 
-        //   this.conditions[condition].id + " -> " + 
-        //   this.conditions[condition].value)
       },
       cpyIndex(index) {  
         this.copyIndex = index;
       },
       addCondition(valu) {  
-        // console.log("s-a facut refresh pentru: " + this.copyIndex)
         this.conditions[this.copyIndex].value = valu.map((x) => x);
-        // for(var condition in this.conditions)
-        //   console.log("conditions de: (" + condition + ") " + 
-        //   this.conditions[condition].id + " -> " + 
-        //   this.conditions[condition].value)
       }
     }
   }
@@ -177,5 +191,12 @@ import TheCondition from '../components/TheCondition.vue'
   
   #addConditionRow {
     padding-top: 20px;
+  }
+  
+  #errorText {
+    padding-top: 0px;
+    margin-top: 0px;
+    color: red;
+    padding-left: 20px;
   }
 </style>

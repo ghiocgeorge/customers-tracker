@@ -189,10 +189,6 @@
       <span v-if="error.length > 0" id="errorText">Errors: {{ error }}</span>
     </v-row>
 
-    <!-- <v-row>
-      <span>Selected: {{ selected }}</span>
-    </v-row> -->
-
     <v-row>
       <v-divider></v-divider>
     </v-row>
@@ -303,7 +299,7 @@ import mockData from '../store/mock-data.js'
         if (this.selected[1] != null &&
           this.selected[2] != null && 
           (this.selected[3] != null && this.selected[3] != "")) {
-            // Type: date
+            // For Type: date
             if (this.dateType.includes(this.selected[1])) {
               if (!(/^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$/.
                 test(this.selected[3]))) {
@@ -329,7 +325,7 @@ import mockData from '../store/mock-data.js'
               }
             }
             
-            // Type: value
+            // For Type: value
             if (this.selected[1] == 4) {
               if (!(/^-?[0-9][0-9,.]*$/.test(this.selected[3]))) {
                 this.error.push("For value, you must type only digits and " + 
