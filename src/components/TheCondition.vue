@@ -13,7 +13,7 @@
           :rules="[rules.required]"
           label="Choose a condition"
           hide-details
-          @change="clear([2,3,4])"
+          @change="clear([4,3,2])"
         ></v-select>
       </v-col>
 
@@ -186,6 +186,7 @@
           </v-btn>
         </button>
       </v-col>
+      <span v-if="error.length > 0" id="errorText">Errors: {{ error }}</span>
     </v-row>
 
     <!-- <v-row>
@@ -205,6 +206,7 @@ import mockData from '../store/mock-data.js'
 		props:['index', 'data'],
     data() {
       return {
+        error: [],
         menu1: false,
         menu2: false,
         rules: {
@@ -289,10 +291,75 @@ import mockData from '../store/mock-data.js'
         });
       }
     },
+    watch: {
+      selected() {
+        // Before I send the data to "AddSegment" parent component
+        // All fields are required
+        // If date format: YYYY-MM-DD
+        // If start date < end date
+        // If value input is type: number
+       
+        this.error = [];
+        if (this.selected[1] != null &&
+          this.selected[2] != null && 
+          (this.selected[3] != null && this.selected[3] != "")) {
+            // Type: date
+            if (this.dateType.includes(this.selected[1])) {
+              if (!(/^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$/.
+                test(this.selected[3]))) {
+                  this.error.push("Please enter a date that " + 
+                    "respects the YYYY-MM-DD pattern!");
+              }
+              if (this.selected[2] == 3) {
+                if(this.selected[4] != null &&
+                  this.selected[4] != "") {
+                  if (!(/^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$/.
+                    test(this.selected[3]))) {
+                      this.error.push("Please enter a date that respects" + 
+                        "the YYYY-MM-DD pattern!");
+                  } else {
+                    if (this.selected[3] >= this.selected[4]) {
+                      this.error.push(
+                        "The Start date must be < than the end date");
+                    }
+                  }
+                } else {
+                  this.error.push("You have empty inputs!");
+                }
+              }
+            }
+            
+            // Type: value
+            if (this.selected[1] == 4) {
+              if (!(/^-?[0-9][0-9,.]*$/.test(this.selected[3]))) {
+                this.error.push("For value, you must type only digits and " + 
+                  "for decimal, you can use ',' or '.'!");
+              }
+              if (this.selected[2] == 3) {
+                if (this.selected[4] != null &&
+                  this.selected[4] != "") {
+                  if(!(/^-?[0-9][0-9,.]*$/.test(this.selected[4]))) {
+                    this.error.push("For value, you must type only digits and " + 
+                      "for decimal, you can use ',' or '.'!");
+                  }
+                } else {
+                  this.error.push("You have empty inputs!");
+                }
+              }
+            }
+        } else {
+          this.error.push("You have empty inputs!");
+        }
+        if (this.error.length == 0) {
+          this.$emit("add");
+          this.$emit("send", this.selected);
+        }
+      }
+    },
     methods: {
       clear(foo) {
-        for(var fo in foo) {
-          this.selected[foo[fo]] = undefined;
+        for (var fo in foo) {
+          this.selected.splice(foo[fo],1);
         }
       }
     }
@@ -308,5 +375,12 @@ import mockData from '../store/mock-data.js'
   #conditionRow {
     padding-block: 0px;
     margin-top: 0px;
+  }
+
+  #errorText {
+    padding-top: 0px;
+    margin-top: 0px;
+    color: red;
+    padding-left: 20px;
   }
 </style>

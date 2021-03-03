@@ -30,10 +30,15 @@
     v-on:delete-me="delCondition()">
     </component> -->
 
-    <TheCondition v-for="(row, index) in children" :data="row" 
-            v-on:delete-me="delCondition(index)" :key="row.id"
-            :index="index"
-            ></TheCondition>
+    <TheCondition 
+      v-for="(condition, index) in conditions" 
+      :data="condition"  
+      :key="condition.id"
+      :index="index"
+      v-on:delete-me="delCondition(index)"
+      v-on:add="cpyIndex(index)"
+      v-on:send="addCondition"
+    ></TheCondition>
 
     <v-row id="addConditionRow">
       <v-col cols="auto" class="mr-auto">
@@ -82,10 +87,11 @@ import TheCondition from '../components/TheCondition.vue'
     data() {
       return {
         id: 1,
-        children: [
+        copyIndex: undefined,
+        conditions: [
           {
             id: 0,
-            value: "TheCondition"
+            value: []
           }
         ],
         logicalOp: undefined,
@@ -116,18 +122,36 @@ import TheCondition from '../components/TheCondition.vue'
           query: "Segment " + (this.tabs.length + 1),
           isActive: true
         };
+        // Before I make a new tab, here we filter the mockData
+        // Then we send this filter to display in the new tab
         this.tabs.push(addTab);
         this.setActive(addTab);
       },
       newCondition() {  
-        this.children.push({
+        this.conditions.push({
             id: this.id++,
-            value: "TheCondition2"
+            value: []
           });
       },
       delCondition(index) {  
         // alert("You want to delete the condition with id: " + index);
-        this.children.splice(index,1);
+        this.conditions.splice(index,1);
+        // console.log("s-a sters: " + index)
+        // for(var condition in this.conditions)
+        //   console.log("conditions de: (" + condition + ") " + 
+        //   this.conditions[condition].id + " -> " + 
+        //   this.conditions[condition].value)
+      },
+      cpyIndex(index) {  
+        this.copyIndex = index;
+      },
+      addCondition(valu) {  
+        // console.log("s-a facut refresh pentru: " + this.copyIndex)
+        this.conditions[this.copyIndex].value = valu.map((x) => x);
+        // for(var condition in this.conditions)
+        //   console.log("conditions de: (" + condition + ") " + 
+        //   this.conditions[condition].id + " -> " + 
+        //   this.conditions[condition].value)
       }
     }
   }
