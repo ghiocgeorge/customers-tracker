@@ -19,11 +19,23 @@
             ></v-select>
           <span id="firstRow">of the following: </span>
         </v-row>
-        <v-row>
-          <span v-if="error.length > 0" id="errorText">Errors: {{ error }}</span>
-        </v-row>
+      </v-col>
+      <v-col cols="auto">
+        <v-tooltip color="red" left v-if="error.length > 0">
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon
+              color="red"
+              v-bind="attrs"
+              v-on="on"
+            >
+              mdi-alert-circle-outline
+            </v-icon>
+          </template>
+          <span>{{error[0]}}</span>
+        </v-tooltip>
       </v-col>
     </v-row>
+    <v-row v-if="error.length > 0" id="errorRow"></v-row>
 
     <TheCondition 
       v-for="(condition, index) in conditions" 
@@ -95,6 +107,14 @@ import TheCondition from '../components/TheCondition.vue'
         activeTab: {},
       } 
     },
+    watch: {
+      logicalOp() {
+        this.error = [];
+        if(this.logicalOp == null || this.logicalOp == "") {
+          this.error.push("You have empty inputs!");
+        }
+      }
+    },
     methods: {
       setActive(tab) {
         var self = this;
@@ -109,7 +129,7 @@ import TheCondition from '../components/TheCondition.vue'
         this.$router.push({ path: `/segment/${tid}` });
       },
       newTab() {  
-        // Before I make a new tab, here we filter the mockData
+        // Before we make a new tab, here we filter the mockData
         // Then we send this filter to display in the new tab
         // But if we have an empty field, we only give an error message
 
@@ -132,20 +152,18 @@ import TheCondition from '../components/TheCondition.vue'
         // position 4: 
             // second value (this will exist only if is selected "Is between")
 
+        // Legend for logicalOp 
+        // position 0: ANY
+        // position 1: ALL
+
         this.error = [];
         if(this.logicalOp == null || this.logicalOp == "") {
           this.error.push("You have empty inputs!");
-        } else {
-          for(var condition in this.conditions)
-            console.log("conditions de: (" + condition + ") " + 
-            this.conditions[condition].id + " -> " + 
-            this.conditions[condition].value)
-        }
-        
+        }        
         if (this.error.length == 0) {
           var addTab = {
             id: this.tabs.length,
-            query: "Segment " + (this.tabs.length + 1),
+            query: "daout papa " + (this.tabs.length + 1),
             isActive: true
           };
           this.tabs.push(addTab);
@@ -191,6 +209,12 @@ import TheCondition from '../components/TheCondition.vue'
   
   #addConditionRow {
     padding-top: 20px;
+  }
+  
+  #errorRow {
+    margin-top: 10px;
+    padding-left: 20px;
+    border-top: 1px solid red;
   }
   
   #errorText {

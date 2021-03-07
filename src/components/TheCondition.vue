@@ -185,13 +185,23 @@
             <v-icon>mdi-close-thick</v-icon>
           </v-btn>
         </button>
+        <v-tooltip color="red" left v-if="error.length > 0">
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon
+              color="red"
+              v-bind="attrs"
+              v-on="on"
+              class="ml-3"
+            >
+              mdi-alert-circle-outline
+            </v-icon>
+          </template>
+          <span>{{error[0]}}</span>
+        </v-tooltip>
       </v-col>
-      <span v-if="error.length > 0" id="errorText">Errors: {{ error }}</span>
     </v-row>
-
-    <v-row>
-      <v-divider></v-divider>
-    </v-row>
+    <v-row v-if="error.length > 0" id="errorRow"></v-row>
+    <v-row v-if="!(error.length > 0)" id="noErrorRow"></v-row>
   </v-container>
 </template>
 
@@ -288,13 +298,7 @@ import mockData from '../store/mock-data.js'
       }
     },
     watch: {
-      selected() {
-        // Before I send the data to "AddSegment" parent component
-        // All fields are required
-        // If date format: YYYY-MM-DD
-        // If start date < end date
-        // If value input is type: number
-       
+      selected() {       
         this.error = [];
         if (this.selected[1] != null &&
           this.selected[2] != null && 
@@ -373,10 +377,17 @@ import mockData from '../store/mock-data.js'
     margin-top: 0px;
   }
 
-  #errorText {
+  #errorRow {
     padding-top: 0px;
     margin-top: 0px;
-    color: red;
     padding-left: 20px;
+    border-top: 1px solid red;
+  }
+  
+  #noErrorRow {
+    padding-top: 0px;
+    margin-top: 0px;
+    padding-left: 20px;
+    border-top: 1px solid rgb(212, 212, 212);
   }
 </style>
