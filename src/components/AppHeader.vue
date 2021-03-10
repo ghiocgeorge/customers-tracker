@@ -1,12 +1,18 @@
 <template>
   <v-container id="containerHeader" fluid>
     <v-row>
-      <v-col cols="auto" class="mr-auto">
-        <v-icon left id="backIcon" @click="action"> mdi-arrow-left </v-icon>
+      <v-col
+        cols="auto"
+        class="mr-auto"
+      >
+        <v-icon  id="backIcon" @click="action"> mdi-arrow-left </v-icon>
         <a id="name">Name</a>
       </v-col>
 
-      <v-col cols="auto" class="mt-3">
+      <v-col
+        cols="auto"
+        class="mt-3"
+      >
         <button id="delBtn" v-ripple class="elevation-2 py-2 px-4" @click="action">
           Delete List
         </button>

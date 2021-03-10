@@ -15,13 +15,13 @@
 </template>
 
 <script>
-  export default {
-    methods: {
-      action () {
-        alert('You clicked a button without action!')
-      },
+export default {
+  methods: {
+    action () {
+      alert('You clicked a button without action!')
     },
-  }
+  },
+}
 </script>
 
 <style>

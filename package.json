@@ -15,7 +15,6 @@
     "express": "^4.17.1",
     "vue": "^2.6.11",
     "vue-router": "^3.5.1",
-    "vue-router-tab": "^1.2.4",
     "vuetify": "^2.4.5"
   },
   "devDependencies": {

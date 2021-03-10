@@ -6,15 +6,15 @@
 </template>
 
 <script>
-  import TabScroll from './TabScroll';
-  import RouterAlive from './RouterAlive';
+import TabScroll from './TabScroll';
+import RouterAlive from './RouterAlive';
 
-  export default {
-    components: {
-      TabScroll, 
-      RouterAlive,  
-    },
-  };
+export default {
+  components: {
+    TabScroll, 
+    RouterAlive
+  },
+};
 </script>
 
 <style scoped>

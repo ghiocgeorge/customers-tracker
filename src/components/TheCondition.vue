@@ -208,162 +208,162 @@
 <script>
 import mockData from '../store/mock-data.js'
 
-  export default {
-		props:['index', 'data'],
-    data() {
-      return {
-        error: [],
-        menu1: false,
-        menu2: false,
-        rules: {
-          required: value => !!value || 'Required.',
-          min: v => v.length >= 1 || 'Required.',
+export default {
+  props:['index', 'data'],
+  data() {
+    return {
+      error: [],
+      menu1: false,
+      menu2: false,
+      rules: {
+        required: value => !!value || 'Required.',
+        min: v => v.length >= 1 || 'Required.',
+      },
+      oneOption: ['0','1','2','3','4'],
+      dateType: ['0','1','2','3'],
+      multipleOption: ['5','6'],
+      optionStatus: [
+        {
+          value: '0',
+          text: 'Pending'
         },
-        oneOption: ['0','1','2','3','4'],
-        dateType: ['0','1','2','3'],
-        multipleOption: ['5','6'],
-        optionStatus: [
-          {
-            value: '0',
-            text: 'Pending'
-          },
-          {
-            value: '1',
-            text: 'Under Review'
-          },
-          {
-            value: '2',
-            text: 'Completed'
-          }
-        ],
-        selected: [this.index],
-        tableData: mockData,
-        optionType: [
-          {
-            value: '0',
-            text: 'Mortgage Renewal Date'
-          },
-          {
-            value: '1',
-            text: 'Client Created Date'
-          },
-          {
-            value: '2',
-            text: 'Closing Date'
-          },
-          {
-            value: '3',
-            text: 'First Payment Date'
-          },{
-            value: '4',
-            text: 'Client Value'
-          },
-          {
-            value: '5',
-            text: 'Application Status'
-          },
-          {
-            value: '6',
-            text: 'Referrer'
-          }
-        ],
-        optionCondition: [
-          {
-            value: '0',
-            text: 'Is'
-          },
-          {
-            value: '1',
-            text: 'Is larger than'
-          },
-          {
-            value: '2',
-            text: 'Is less than'
-          },
-          {
-            value: '3',
-            text: 'Is between'
-          }
-        ]
-      } 
-    },
-    computed: {
-      optionReferrer() {
-        return this.tableData.map(el => {
-          return {
-            value : el.referrer.id,
-            text: el.referrer.givenName + " " + el.referrer.familyName
-          }
-        });
-      }
-    },
-    watch: {
-      selected() {       
-        this.error = [];
-        if (this.selected[1] != null &&
-          this.selected[2] != null && 
-          (this.selected[3] != null && this.selected[3] != "")) {
-            // For Type: date
-            if (this.dateType.includes(this.selected[1])) {
-              if (!(/^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$/.
-                test(this.selected[3]))) {
-                  this.error.push("Please enter a date that " + 
-                    "respects the YYYY-MM-DD pattern!");
-              }
-              if (this.selected[2] == 3) {
-                if(this.selected[4] != null &&
-                  this.selected[4] != "") {
-                  if (!(/^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$/.
-                    test(this.selected[3]))) {
-                      this.error.push("Please enter a date that respects" + 
-                        "the YYYY-MM-DD pattern!");
-                  } else {
-                    if (this.selected[3] >= this.selected[4]) {
-                      this.error.push(
-                        "The Start date must be < than the end date");
-                    }
-                  }
+        {
+          value: '1',
+          text: 'Under Review'
+        },
+        {
+          value: '2',
+          text: 'Completed'
+        }
+      ],
+      selected: [this.index],
+      tableData: mockData,
+      optionType: [
+        {
+          value: '0',
+          text: 'Mortgage Renewal Date'
+        },
+        {
+          value: '1',
+          text: 'Client Created Date'
+        },
+        {
+          value: '2',
+          text: 'Closing Date'
+        },
+        {
+          value: '3',
+          text: 'First Payment Date'
+        },{
+          value: '4',
+          text: 'Client Value'
+        },
+        {
+          value: '5',
+          text: 'Application Status'
+        },
+        {
+          value: '6',
+          text: 'Referrer'
+        }
+      ],
+      optionCondition: [
+        {
+          value: '0',
+          text: 'Is'
+        },
+        {
+          value: '1',
+          text: 'Is larger than'
+        },
+        {
+          value: '2',
+          text: 'Is less than'
+        },
+        {
+          value: '3',
+          text: 'Is between'
+        }
+      ]
+    } 
+  },
+  computed: {
+    optionReferrer() {
+      return this.tableData.map(el => {
+        return {
+          value : el.referrer.id,
+          text: el.referrer.givenName + " " + el.referrer.familyName
+        }
+      });
+    }
+  },
+  watch: {
+    selected() {       
+      this.error = [];
+      if (this.selected[1] != null &&
+        this.selected[2] != null && 
+        (this.selected[3] != null && this.selected[3] != "")) {
+          // For Type: date
+          if (this.dateType.includes(this.selected[1])) {
+            if (!(/^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$/.
+              test(this.selected[3]))) {
+                this.error.push("Please enter a date that " + 
+                  "respects the YYYY-MM-DD pattern!");
+            }
+            if (this.selected[2] == 3) {
+              if(this.selected[4] != null &&
+                this.selected[4] != "") {
+                if (!(/^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$/.
+                  test(this.selected[3]))) {
+                    this.error.push("Please enter a date that respects" + 
+                      "the YYYY-MM-DD pattern!");
                 } else {
-                  this.error.push("You have empty inputs!");
+                  if (this.selected[3] >= this.selected[4]) {
+                    this.error.push(
+                      "The Start date must be < than the end date");
+                  }
                 }
+              } else {
+                this.error.push("You have empty inputs!");
               }
             }
-            
-            // For Type: value
-            if (this.selected[1] == 4) {
-              if (!(/^-?[0-9][0-9,.]*$/.test(this.selected[3]))) {
-                this.error.push("For value, you must type only digits and " + 
-                  "for decimal, you can use ',' or '.'!");
-              }
-              if (this.selected[2] == 3) {
-                if (this.selected[4] != null &&
-                  this.selected[4] != "") {
-                  if(!(/^-?[0-9][0-9,.]*$/.test(this.selected[4]))) {
-                    this.error.push("For value, you must type only digits and " + 
-                      "for decimal, you can use ',' or '.'!");
-                  }
-                } else {
-                  this.error.push("You have empty inputs!");
+          }
+          
+          // For Type: value
+          if (this.selected[1] == 4) {
+            if (!(/^-?[0-9][0-9,.]*$/.test(this.selected[3]))) {
+              this.error.push("For value, you must type only digits and " + 
+                "for decimal, you can use ',' or '.'!");
+            }
+            if (this.selected[2] == 3) {
+              if (this.selected[4] != null &&
+                this.selected[4] != "") {
+                if(!(/^-?[0-9][0-9,.]*$/.test(this.selected[4]))) {
+                  this.error.push("For value, you must type only digits and " + 
+                    "for decimal, you can use ',' or '.'!");
                 }
+              } else {
+                this.error.push("You have empty inputs!");
               }
             }
-        } else {
-          this.error.push("You have empty inputs!");
-        }
-        if (this.error.length == 0) {
-          this.$emit("add");
-          this.$emit("send", this.selected);
-        }
+          }
+      } else {
+        this.error.push("You have empty inputs!");
       }
-    },
-    methods: {
-      clear(foo) {
-        for (var fo in foo) {
-          this.selected.splice(foo[fo],1);
-        }
+      if (this.error.length == 0) {
+        this.$emit("add");
+        this.$emit("send", this.selected);
+      }
+    }
+  },
+  methods: {
+    clear(foo) {
+      for (var fo in foo) {
+        this.selected.splice(foo[fo],1);
       }
     }
   }
+}
 </script>
 
 <style scoped>

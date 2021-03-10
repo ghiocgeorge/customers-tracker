@@ -1,7 +1,7 @@
 <template>
   <v-app id="app">
     <v-container id="container" fluid>
-        <AppHeader/>
+      <AppHeader/>
       <v-card id="card" class="elevation-8">
         <Menu/>
         <RouterTab/>
@@ -43,23 +43,4 @@ export default {
     padding-top: 20px;
     padding-inline: 50px;
   }
-
-  /* .container {
-    border: 1px solid green;
-  }
-  .card {
-    border: 1px solid yellow;
-  }
-  .row {
-    border: 1px solid red;
-  }
-  .col {
-    border: 1px solid blue;
-  }  
-  #section {
-    border: 1px solid green;
-  }  
-  #containerAll{
-    border: 1px solid red;
-  } */
 </style>
