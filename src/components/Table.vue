@@ -10,10 +10,9 @@
 
 <script>
 export default {
-    props: ['theData', 'config', 'perPage'],
+    props: ['theData', 'config', 'perPage', 'search'],
     data: function () {
         return {
-            search: '',
         }
     }
 }

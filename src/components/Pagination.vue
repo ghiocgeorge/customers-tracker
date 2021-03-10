@@ -1,10 +1,17 @@
 <template>
     <v-row fluid>
-        <v-col cols="auto" class="mr-auto" id="recordsCol">
-            <a id="records"> Showing {{ rec }} of {{ records }} records </a>
+        <v-col
+            cols="auto"
+            class="mr-auto"
+            id="recordsCol"
+        >
+            <a id="records"> Showing {{ records }} of {{ totalRecords }} records </a>
         </v-col>
 
-        <v-col cols="auto" class="mt-3">
+        <v-col
+            cols="auto"
+            class="mt-3"
+        >
             <v-pagination
                 v-model="page"
                 :length="pages"
@@ -25,16 +32,24 @@ export default {
     data: function () {
         
         if(this.totalRecords < this.perPageOptions[0]) {
-            this.rec = this.totalRecords
+            this.records = this.totalRecords
         } else {
-            this.rec = this.perPageOptions[0]
+            this.records = this.perPageOptions[0]
         }
 
         return {
             page: 1,
             perPage: this.perPageOptions[0],
-            records: this.totalRecords,
-            rec : this.rec,
+            records: this.records,
+        }
+    },
+    watch: {
+        pages () {
+            if(this.totalRecords < this.perPageOptions[0]) {
+                this.records = this.totalRecords
+            } else {
+                this.records = this.perPageOptions[0]
+            } 
         }
     },
     computed: {
@@ -50,11 +65,11 @@ export default {
     methods: {
         changePage () {
             if(this.page == this.pages && this.totalRecords % this.perPage != 0) {
-                this.rec = this.totalRecords % this.perPage;
+                this.records = this.totalRecords % this.perPage;
             } else {
-                this.rec = this.perPage
+                this.records = this.perPage
             }
-            this.$emit('input', { page: this.page, perPage: this.perPage , rec: this.rec})
+            this.$emit('input', { page: this.page, perPage: this.perPage , records: this.records})
         }
     }
 }

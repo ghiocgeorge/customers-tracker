@@ -1,70 +1,37 @@
 <template>
   <v-container fluid id="containerAll">
     <v-text-field
-      v-model="search"
+      v-model="searchQuery"
       append-icon="mdi-magnify"
       label="Search for a contact"
       hide-details
     ></v-text-field>
-    
     <Pagination
-      v-if="tableData"
+      v-if="filtredTable"
       v-model="pagination"
-      :totalRecords="tableData.length"
+      :totalRecords="filtredTable.length"
       :perPageOptions="perPageOptions"
     />
-
-    <!-- //This table it's working only with search bar -->
-    <!-- <v-data-table
-      :headers="config"
-      :items="tableData"
-      :search="search"
-      :items-per-page = "perPageOptions"
-      :pagination="pagination"
-    ></v-data-table> -->
-
-    <!-- //This table it's working only with search bar, but a moved the default pagination, from footer, to header -->
-    <v-data-table
-      :headers="config"
-      :items="tableData"
-      :items-per-page="5"
-      :search="search"
-      :hide-default-footer="true"
-    >
-      <template v-slot:top="{ pagination, options, updateOptions }">
-        <v-data-footer 
-          :pagination="pagination" 
-          :options="options"
-          @update:options="updateOptions"
-          items-per-page-text="Contacts per page:"/>
-      </template>
-    </v-data-table>
-
-      <!-- <v-divider></v-divider>
-      <v-divider></v-divider>
-      <v-divider></v-divider>
-      
-    //This table it's working only with pagination
     <Table
-      v-if="tableData"
+      v-if="filtredTable"
       :theData="computedTableData"
       :config="config"
       :perPage="perPageOptions"
       :search="search"
-    /> -->
+    />
   </v-container>
 </template>
 
 <script>
-// import Table from '../components/Table'
+import Table from '../components/Table'
 import Pagination from '../components/Pagination'
 import mockData from '../store/mock-data.js'
 const perPageOptions = [6]
 
 export default {
   components: {
-    // Table,
     Pagination,
+    Table
   },
   data: function () {
     return {
@@ -73,14 +40,15 @@ export default {
       perPage: perPageOptions[0],
       tableData: mockData,
       pagination: { page: 1, perPage: perPageOptions[0] },
-      search: '',
+      searchQuery: '',
       config: [
         {
           value: 'email',
           text: 'Email'
         },
         {
-          text: 'Source'
+          text: 'Source',
+          sortable: false
         },
         {
           value: 'familyName',
@@ -92,10 +60,12 @@ export default {
         },
         {
           value: 'applicationStatus',
-          text: 'App Status'
+          text: 'App Status',
+          sortable: false
         },
         {
-          text: 'Profile Status'
+          text: 'Profile Status',
+          sortable: false
         },
         {
           value: 'value',
@@ -103,26 +73,39 @@ export default {
         },
         {
           value: 'mortgageRenewalDate',
-          text: 'Renewal Date',
-          sortable: false,
+          text: 'Renewal Date'
         },
         {
           value: 'referrer.familyName',
-          text: 'Referrer'
+          text: 'Referrer',
+          sortable: false
         },
         {
-          text: 'OPT-IN'
+          text: 'OPT-IN',
+          sortable: false
         }
       ]
     }
   },
   computed: {
     computedTableData () {
-      if (!this.tableData) return []
+      if (!this.filtredTable) return []
       else {
         const firstIndex = (this.pagination.page - 1) * this.pagination.perPage
         const lastIndex = this.pagination.page * this.pagination.perPage
-        return this.tableData.slice(firstIndex, lastIndex)
+        return this.filtredTable.slice(firstIndex, lastIndex)
+      }
+    },
+    filtredTable(){
+      if(this.searchQuery){
+      return this.tableData.filter((item)=>{
+        return this.searchQuery.toLowerCase().split(' ').every(x => 
+        (item.givenName.toLowerCase().includes(x) ||
+         item.familyName.toLowerCase().includes(x) ||
+         item.email.toLowerCase().includes(x)))
+      })
+      }else{
+        return this.tableData;
       }
     }
   }
